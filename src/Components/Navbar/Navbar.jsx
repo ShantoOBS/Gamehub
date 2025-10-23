@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router';
-import logo from '../../assets/logo.png'
+import logo from '../../assets/download (1).png'
 
 export default function Navbar(){
 
@@ -12,7 +12,7 @@ export default function Navbar(){
       
     </>
   
-  return  <div className="navbar bg-base-100 shadow-sm">
+  return  <div className="navbar bg-gray-900 text-white shadow-sm shadow-blue-500 mb-4">
   <div className="navbar-start">
     <div className="dropdown">
       <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -26,7 +26,7 @@ export default function Navbar(){
         }
       </ul>
     </div>
-    <a className="btn btn-ghost text-xl font-bold">Game <img src={logo} alt="" className='h-7 w-7' /> Hub</a>
+     <img src={logo} alt="" className='h-15 w-15 bg-cover' />
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1 space-x-4 font-bold ">
@@ -36,7 +36,12 @@ export default function Navbar(){
     </ul>
   </div>
   <div className="navbar-end">
-    <a className="btn">Button</a>
+     <button
+                
+                className="flex-none rounded-md bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white shadow hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition"
+              >
+                Subscribe
+              </button>
   </div>
 </div>
   

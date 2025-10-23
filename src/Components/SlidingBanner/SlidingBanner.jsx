@@ -25,7 +25,7 @@ export default function SlidingBanner() {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 700,
+    speed: 800,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
