@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router';
 import logo from '../../assets/download (1).png'
 
 export default function Navbar(){
@@ -12,7 +12,7 @@ export default function Navbar(){
       
     </>
   
-  return  <div className="navbar bg-gray-900 text-white shadow-sm shadow-blue-500 mb-4">
+  return  <div className="navbar bg-gray-900 text-white shadow-sm shadow-blue-500 mb-4 ">
   <div className="navbar-start">
     <div className="dropdown">
       <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -20,7 +20,7 @@ export default function Navbar(){
       </div>
       <ul
         tabIndex="-1"
-        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+        className="menu menu-sm dropdown-content bg-gray-900 text-white font-bold rounded-box z-1 mt-3 w-70 p-2 shadow-md shadow-blue-500">
         {
             links
         }
@@ -35,13 +35,24 @@ export default function Navbar(){
     }
     </ul>
   </div>
-  <div className="navbar-end">
-     <button
-                
+  <div className="navbar-end space-x-2">
+
+     <Link to='/register'
+                 
                 className="flex-none rounded-md bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white shadow hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition"
               >
-                Subscribe
-              </button>
+                Regiter
+              </Link>
+
+
+              <Link to='/login'
+                 
+                className="flex-none rounded-md bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white shadow hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition"
+              >
+                Login
+              </Link>
+
+              
   </div>
 </div>
   

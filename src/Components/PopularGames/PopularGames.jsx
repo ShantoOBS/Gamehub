@@ -2,50 +2,15 @@ import React from "react";
 import { Link } from "react-router";
 
 
-const games = [
-  {
-    id: "1",
-    title: "Player Unknowns Battle Ground: PUBG",
-    coverPhoto: "https://example.com/images/pubg.png",
-    category: "FPS",
-    downloadLink: "https://www.pubgmobile.com/en-US/home.shtml",
-    description:
-      "PUBG Mobile is a fast-paced battle royale game where players fight for survival, strategy, and victory on dynamic maps.",
-    ratings: "4.5",
-    developer: "Krafton",
-  },
-  {
-    id: "2",
-    title: "Call of Duty: Mobile",
-    coverPhoto: "https://example.com/images/cod.png",
-    category: "FPS",
-    downloadLink: "https://www.callofduty.com/mobile",
-    description:
-      "COD Mobile brings console-quality gameplay to your phone with various modes and maps.",
-    ratings: "4.8",
-    developer: "Activision",
-  },
-  {
-    id: "3",
-    title: "Free Fire",
-    coverPhoto: "https://example.com/images/freefire.png",
-    category: "Battle Royale",
-    downloadLink: "https://ff.garena.com/",
-    description:
-      "Free Fire is a popular survival shooter game available on mobile.",
-    ratings: "4.4",
-    developer: "Garena",
-  },
-];
-
-export default function PopularGames() {
+export default function PopularGames({firstThree,title}) {
   
-  const sortedGames = [...games].sort((a, b) => b.ratings - a.ratings);
+  const sortedGames = firstThree;
+  
 
   return (
     <div className="p-6">
 
-      <h2 className="text-5xl font-bold my-7 text-center">🎮 Popular Games</h2>
+      <h2 className="text-5xl font-bold my-7 text-center">🎮 {title}</h2>
 
       <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {
