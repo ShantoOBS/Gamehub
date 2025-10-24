@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import unknow from '../assets/unknow.jpg';
-import { motion } from "framer-motion"; // 1. Import motion
+import { motion } from "framer-motion"; 
 import { toast } from "react-toastify";
 
 const Profile = () => {
@@ -24,8 +24,9 @@ const Profile = () => {
     updatePro({ displayName: name, photoURL: photoURL })
       .then(() => {
         setUser({ ...user, displayName: name, photoURL: photoURL });
-        toast("Profile updated successfully!");
         setLoading(false);
+        toast("Profile updated successfully!");
+        
       })
       .catch((error) => setMessage(error.message));
   };
