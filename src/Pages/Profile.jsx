@@ -6,30 +6,36 @@ import { toast } from "react-toastify";
 
 const Profile = () => {
   const { user, updatePro, setUser, setLoading } = useContext(AuthContext);
-  const [name, setName] = useState(user?.displayName || "");
-  const [photoURL, setPhotoURL] = useState(user?.photoURL || "");
   const [message, setMessage] = useState("");
 
   useEffect(() => {
     document.title = " Profile | GameHub ";
   }, []);
 
-  const handleUpdate = (event) => {
-    event.preventDefault();
-    if (!name || !photoURL) {
-      setMessage("Please fill in both fields.");
-      return;
-    }
+const handleUpdate = async (event) => {
+  event.preventDefault();
 
-    updatePro({ displayName: name, photoURL: photoURL })
-      .then(() => {
-        setUser({ ...user, displayName: name, photoURL: photoURL });
-        setLoading(false);
-        toast("Profile updated successfully!");
-        
-      })
-      .catch((error) => setMessage(error.message));
-  };
+    const form = event.target;
+    const name = form.name.value;
+    const photo = form.photo.value;
+
+  if (!name || !photo) {
+    setMessage("Please fill in both fields.");
+    return;
+  }
+
+  setLoading(true); 
+
+  try {
+    await updatePro({ displayName: name, photoURL: photo });
+    setUser({ ...user, displayName: name, photoURL: photo });
+    toast("Profile updated successfully!");
+  } catch (error) {
+    setMessage(error.message);
+  } finally {
+    setLoading(false); 
+  }
+};
 
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -87,8 +93,7 @@ const Profile = () => {
               <label className="block text-gray-300 mb-1">Full Name</label>
               <input
                 type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                name="name"
                 placeholder="Enter new name"
                 className="w-full px-4 py-2 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-indigo-500"
               />
@@ -98,8 +103,7 @@ const Profile = () => {
               <label className="block text-gray-300 mb-1">Photo URL</label>
               <input
                 type="text"
-                value={photoURL}
-                onChange={(e) => setPhotoURL(e.target.value)}
+                name="photo"
                 placeholder="Enter new photo URL"
                 className="w-full px-4 py-2 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-indigo-500"
               />
