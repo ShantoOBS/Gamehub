@@ -62,7 +62,7 @@ const Register = () => {
         <h1 className="text-3xl font-bold text-center mb-6">Register for GameHub</h1>
 
         <form onSubmit={handleRegister} className="space-y-4">
-        
+
           <div>
             <label className="block text-gray-300 mb-1">Full Name</label>
             <input
@@ -95,7 +95,7 @@ const Register = () => {
             />
           </div>
 
-      
+
           <div className="relative">
             <label className="block text-gray-300 mb-1">Password</label>
             <input
@@ -105,6 +105,7 @@ const Register = () => {
               required
               className="w-full px-4 py-2 pr-10 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-indigo-500"
             />
+
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
@@ -119,7 +120,7 @@ const Register = () => {
           </div>
 
           {error && <p className="text-red-500 text-sm">{error}</p>}
-         
+
           <button
             type="submit"
             className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-md font-semibold transition"

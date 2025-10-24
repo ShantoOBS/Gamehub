@@ -1,13 +1,21 @@
 import { Link, NavLink } from 'react-router';
 import logo from '../../assets/download (1).png'
+import { useContext } from 'react';
+import { AuthContext } from '../../Provider/AuthProvider';
 
 export default function Navbar(){
+
+  const {signOutUser,user}=useContext(AuthContext);
+
+  const handleSignOUt=()=>{
+    signOutUser();
+  }
 
   const links= <>
     
         <NavLink to="/">Home</NavLink>
         <NavLink to="/all-game">All Game</NavLink>
-        <NavLink to="/about">About</NavLink>
+        <NavLink to="/profile">Profile</NavLink>
      
       
     </>
@@ -38,7 +46,21 @@ export default function Navbar(){
   </div>
   <div className="navbar-end space-x-2">
 
-     <Link to='/register'
+     {
+
+        user ? <> 
+
+              <button onClick={handleSignOUt}
+                 
+                className="flex-none rounded-md bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white shadow hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition"
+              >
+                Sign Out
+              </button>
+        
+             </> :
+
+             <>
+                 <Link to='/register'
                  
                 className="flex-none rounded-md bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white shadow hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition"
               >
@@ -52,6 +74,11 @@ export default function Navbar(){
               >
                 Login
               </Link>
+             </>
+     }
+
+           
+           
 
               
   </div>

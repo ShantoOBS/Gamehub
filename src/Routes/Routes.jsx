@@ -6,7 +6,8 @@ import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import NotFound from "../Pages/NotFound";
 import Details from "../Pages/Details";
-
+import PrivateRoutes from "../Provider/PrivateRoutes";
+import Profile from "../Pages/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -34,8 +35,14 @@ export const router = createBrowserRouter([
            },
            {
             path:'/details/:id',
-            element: <Details></Details>,
+            element: <PrivateRoutes> <Details></Details> </PrivateRoutes> ,
             loader: ()=> fetch('/data.json')
+           },
+           {
+
+            path:'/profile',
+            element: <PrivateRoutes> <Profile></Profile> </PrivateRoutes>
+
            },
            {
             path:'/*',

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"; 
 import { AuthContext } from "../Provider/AuthProvider";
 
@@ -8,13 +8,12 @@ const Login = () => {
       document.title = "Login";
     }, []);
 
-    const {name}=useContext(AuthContext);
-
-    console.log(name);
+    const {loginUser,setUser,signInGoogle}=useContext(AuthContext);
 
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const location=useLocation();
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -23,12 +22,29 @@ const Login = () => {
     const password = form.password.value;
 
     console.log("Email:", email, "Password:", password);
+
+    loginUser(email, password)
+      .then((res) => {
+        if (!res.user.emailVerified) {
+          alert('Please verify your email first!');
+          return;
+        }
+        setUser(res.user);
+        navigate(location.state ? location.state : '/');
+      })
+      .catch((err) => setError(err.message));
   
   };
 
  
   const handleGoogleLogin = () => {
-    console.log("Google login clicked");
+
+    signInGoogle()
+    .then((res) => {
+        setUser(res.user);
+        navigate(location.state ? location.state : '/');
+      })
+      .catch((err) => setError(err.message));
    
   };
 

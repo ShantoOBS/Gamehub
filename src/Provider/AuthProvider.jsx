@@ -1,9 +1,10 @@
-import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
-import React, { createContext, useState } from 'react'
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, sendEmailVerification, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
+import React, { createContext, useEffect, useState } from 'react'
 import { auth } from '../firebaes/firebase.config';
 
 
 export const AuthContext = createContext();
+const GoogleProvider = new GoogleAuthProvider();
 
 export default function AuthProvider({ children }) {
 
@@ -22,6 +23,32 @@ export default function AuthProvider({ children }) {
         return sendEmailVerification(currentUser);
     }
 
+      const loginUser=(email, password)=>{
+      setLoading(true);
+       return signInWithEmailAndPassword(auth,email, password);
+    }
+
+      const signOutUser=()=>{
+      setLoading(true);
+       return signOut(auth);
+    }
+
+    const signInGoogle=()=>{
+
+        return signInWithPopup(auth,GoogleProvider);
+    }
+
+    useEffect(()=>{
+      const unsuscribe=onAuthStateChanged(auth,(currentUser)=>{
+          setUser(currentUser);
+          setLoading(false);
+      });
+
+      return ()=>{
+          unsuscribe();
+      }
+    },[])
+
     const authInfo = {
         user,
         setUser,
@@ -32,6 +59,9 @@ export default function AuthProvider({ children }) {
         createUser,
         updatePro,
         emailVerify,
+        signOutUser,
+        loginUser,
+        signInGoogle,
 
     }
 
