@@ -7,7 +7,6 @@ export default function PrivateRoutes({ children }) {
   const { user, loading } = useContext(AuthContext);
   const location = useLocation();
 
-  // ✅ Fixed typo here (Loading instead of Loadind)
   if (loading) return <Loading />;
 
   if (user) return children;

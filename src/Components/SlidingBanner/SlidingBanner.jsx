@@ -1,5 +1,6 @@
 import React from "react";
 import Slider from "react-slick";
+import { motion } from "framer-motion"; 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -8,17 +9,20 @@ export default function SlidingBanner() {
     {
       title: "Welcome to GameHub 🎮",
       content: "Discover amazing indie games from creative developers.",
-      image: "https://img.freepik.com/premium-photo/retro-lines-grid-space-abstract-background-elegant-luxury-80s-90s-style-3d-illustration_510351-3019.jpg",
+      image:
+        "https://img.freepik.com/premium-photo/retro-lines-grid-space-abstract-background-elegant-luxury-80s-90s-style-3d-illustration_510351-3019.jpg",
     },
     {
       title: "Play Anytime, Anywhere 🕹️",
       content: "Your favorite games are just one click away!",
-      image: "https://thumbs.dreamstime.com/b/digital-gaming-hub-cyber-world-futuristic-playstation-ui-virtual-entertainment-network-sci-fi-game-interface-ai-generated-362042638.jpg",
+      image:
+        "https://thumbs.dreamstime.com/b/digital-gaming-hub-cyber-world-futuristic-playstation-ui-virtual-entertainment-network-sci-fi-game-interface-ai-generated-362042638.jpg",
     },
     {
       title: "Support Indie Developers ❤️",
       content: "Help new creators grow by exploring their creations.",
-      image: "https://t3.ftcdn.net/jpg/08/61/51/02/360_F_861510294_6Je3kKMSC7wNfW0JIZf0OyYQcGCzB8y9.jpg",
+      image:
+        "https://t3.ftcdn.net/jpg/08/61/51/02/360_F_861510294_6Je3kKMSC7wNfW0JIZf0OyYQcGCzB8y9.jpg",
     },
   ];
 
@@ -45,12 +49,25 @@ export default function SlidingBanner() {
             />
 
             <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white rounded-xl">
-              <h2 className="text-5xl font-bold mb-3 drop-shadow-lg ">
+             
+              <motion.h2
+                className="text-5xl font-bold mb-3 drop-shadow-lg"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
                 {slide.title}
-              </h2>
-              <p className="text-lg max-w-2xl text-center drop-shadow-md">
+              </motion.h2>
+
+            
+              <motion.p
+                className="text-lg max-w-2xl text-center drop-shadow-md"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+              >
                 {slide.content}
-              </p>
+              </motion.p>
             </div>
           </div>
         ))}
