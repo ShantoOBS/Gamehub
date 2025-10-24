@@ -3,7 +3,7 @@ import { useLoaderData, useParams } from "react-router";
 
 const Details = () => {
   useEffect(() => {
-    document.title = "Game Details";
+    document.title = "Game Details | GameHub";
   }, []);
 
   const data = useLoaderData();
@@ -11,7 +11,7 @@ const Details = () => {
   const game = data.find((single) => single.id === id);
 
   return (
-    <div className=" bg-gradient-to-b from-gray-900 to-black text-white flex justify-evenly items-center px-4 py-10 ">
+    <div className=" bg-gradient-to-b from-gray-900 to-black text-white flex flex-col md:flex-row justify-evenly items-center px-4 py-10 ">
       <div className="">
         <img
           src={game.coverPhoto}

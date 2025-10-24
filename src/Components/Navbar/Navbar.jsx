@@ -2,6 +2,7 @@ import { Link, NavLink } from 'react-router';
 import logo from '../../assets/download (1).png'
 import { useContext } from 'react';
 import { AuthContext } from '../../Provider/AuthProvider';
+import unknow from '../../assets/unknow.jpg'
 
 export default function Navbar(){
 
@@ -15,7 +16,10 @@ export default function Navbar(){
     
         <NavLink to="/">Home</NavLink>
         <NavLink to="/all-game">All Game</NavLink>
-        <NavLink to="/profile">Profile</NavLink>
+        <NavLink to="/about">About</NavLink>
+        {
+          user &&  <NavLink to="/profile">Profile</NavLink>
+        }
      
       
     </>
@@ -37,7 +41,7 @@ export default function Navbar(){
     <Link to='/'>  <img src={logo} alt="" className='h-15 w-15 bg-cover' /> </Link>
     
   </div>
-  <div className="navbar-center hidden lg:flex">
+  <div className="navbar-center hidden lg:flex lg:items-center">
     <ul className="menu menu-horizontal px-1 space-x-4 font-bold ">
     {
         links
@@ -46,9 +50,22 @@ export default function Navbar(){
   </div>
   <div className="navbar-end space-x-2">
 
+
      {
 
         user ? <> 
+
+          <div className='flex items-center gap-2'>
+            <div className='flex justify-center items-center'>
+
+            <img
+            src={user?.photoURL || user?.reloadUserInfo?.photoUrl || unknow}
+            alt="User Avatar"
+            className="w-10 h-10  rounded-full border-2 border-indigo-500 "
+            />
+
+            </div>
+          
 
               <button onClick={handleSignOUt}
                  
@@ -56,6 +73,7 @@ export default function Navbar(){
               >
                 Sign Out
               </button>
+          </div>
         
              </> :
 

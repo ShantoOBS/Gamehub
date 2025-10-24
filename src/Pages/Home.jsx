@@ -7,7 +7,7 @@ import { useLoaderData } from 'react-router'
 
 export default function Home() {
     useEffect(() => {
-      document.title = "Home";
+      document.title = "Home | GameHub";
     }, []);
   
   const data=useLoaderData();

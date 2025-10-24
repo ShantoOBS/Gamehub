@@ -1,19 +1,21 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"; 
 import { AuthContext } from "../Provider/AuthProvider";
+import { toast } from "react-toastify";
 
 const Login = () => {
   useEffect(() => {
-      document.title = "Login";
+      document.title = "Login | GameHub";
     }, []);
 
-    const {loginUser,setUser,signInGoogle}=useContext(AuthContext);
+    const {loginUser,setUser,signInGoogle,forgatePass}=useContext(AuthContext);
 
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const location=useLocation();
+  const emailRef=useRef("")
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -21,12 +23,11 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
 
-    console.log("Email:", email, "Password:", password);
-
+   
     loginUser(email, password)
       .then((res) => {
         if (!res.user.emailVerified) {
-          alert('Please verify your email first!');
+          toast('Please verify your email first!');
           return;
         }
         setUser(res.user);
@@ -48,6 +49,19 @@ const Login = () => {
    
   };
 
+  const handleForgate = () => {
+    const email = emailRef.current.value; 
+
+    if (!email) {
+      toast('Please enter your email first!');
+      return;
+    }
+
+    forgatePass(email)
+      .then(() => toast('Password reset link sent to your email.'))
+      .catch((err) => setError(err.message));
+  };
+
   return (
     <div className="min-h-screen flex justify-center items-center bg-gradient-to-b from-gray-900 to-black text-white px-4">
       <div className="w-full max-w-md bg-gray-800 p-8 rounded-2xl shadow-sm shadow-blue-500">
@@ -60,6 +74,7 @@ const Login = () => {
             <input
               type="email"
               name="email"
+              ref={emailRef} 
               placeholder="Enter your email"
               required
               className="w-full px-4 py-2 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-indigo-500"
@@ -88,8 +103,12 @@ const Login = () => {
                 <EyeIcon className="w-5 h-5" />
               )}
             </button>
-          </div>
 
+             <p onClick={handleForgate} className="hover:underline cursor-pointer">
+            Forgate Password?
+          </p>
+          </div>
+         
           {error && <p className="text-red-500 text-sm">{error}</p>}
 
       

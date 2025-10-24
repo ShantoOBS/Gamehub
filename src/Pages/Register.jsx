@@ -2,10 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { AuthContext } from "../Provider/AuthProvider";
+import { toast } from "react-toastify";
 
 const Register = () => {
   useEffect(() => {
-    document.title = "Register";
+    document.title = "Register | GameHub";
   }, []);
 
   const { createUser, setUser, updatePro, emailVerify } =
@@ -38,10 +39,10 @@ const Register = () => {
         updatePro({ displayName: name, photoURL: photo })
           .then(() => {
             setUser({ ...user, displayName: name, photoURL: photo });
-            alert("Account Created Successfully.");
+            toast("Account Created Successfully.");
             emailVerify(user)
               .then(() => {
-                alert("Verification email sent! Please check your inbox.");
+                toast("Verification email sent! Please check your inbox.");
                 navigate("/");
               })
               .catch((error) => setLocalError(error.message));
