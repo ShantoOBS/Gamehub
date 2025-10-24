@@ -31,6 +31,7 @@ const Login = () => {
           return;
         }
         setUser(res.user);
+        toast.success("Login Successfuly")
         navigate(location.state ? location.state : '/');
       })
       .catch((err) => setError(err.message));

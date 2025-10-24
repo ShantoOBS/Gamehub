@@ -1,41 +1,44 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
-import unknow from '../assets/unknow.jpg';
-import { motion } from "framer-motion"; 
+import unknow from "../assets/unknow.jpg";
+import { motion } from "framer-motion";
 import { toast } from "react-toastify";
+import { auth } from "../firebaes/firebase.config";
 
 const Profile = () => {
-  const { user, updatePro, setUser, setLoading } = useContext(AuthContext);
+  const { user, setUser, setLoading, updatePro } = useContext(AuthContext);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    document.title = " Profile | GameHub ";
+    document.title = "Profile | GameHub";
   }, []);
 
-const handleUpdate = async (event) => {
-  event.preventDefault();
+  const handleUpdate = async (event) => {
+    event.preventDefault();
 
     const form = event.target;
-    const name = form.name.value;
-    const photo = form.photo.value;
+    const name = form.name.value.trim();
+    const photo = form.photo.value.trim();
 
-  if (!name || !photo) {
-    setMessage("Please fill in both fields.");
-    return;
-  }
+    if (!name || !photo) {
+      setMessage("Please fill in both fields.");
+      return;
+    }
+   
+      updatePro({ displayName: name, photoURL: photo })
+      .then( ()=>{
 
-  setLoading(true); 
-
-  try {
-    await updatePro({ displayName: name, photoURL: photo });
-    setUser({ ...user, displayName: name, photoURL: photo });
-    toast("Profile updated successfully!");
-  } catch (error) {
-    setMessage(error.message);
-  } finally {
-    setLoading(false); 
-  }
-};
+           setUser({...user,displayName: name, photoURL: photo })
+           toast.success("Profile updated successfully!");
+           form.reset();
+           setLoading(false);
+           console.log(user);
+      })
+     .catch (error => {
+      setMessage(error.message);
+     })
+ 
+    }
 
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -53,21 +56,24 @@ const handleUpdate = async (event) => {
   };
 
   return (
-    <motion.div 
-      className=" text-white px-4 py-6"
+    <motion.div
+      className="text-white px-4 py-6"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-      <motion.div className="bg-black p-8 rounded-2xl shadow-sm shadow-blue-500" 
-                  variants={containerVariants} 
-                  initial="hidden" 
-                  animate="visible">
+      <motion.div
+        className="bg-black p-8 rounded-2xl shadow-sm shadow-blue-500"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <h1 className="text-3xl font-bold text-center mb-6">Your Profile</h1>
-        <div className="flex flex-col md:flex-row justify-evenly gap-8">
 
-          <motion.div 
-            className="text-center mb-6  md:w-1/2"
+        <div className="flex flex-col md:flex-row justify-evenly gap-8">
+     
+          <motion.div
+            className="text-center mb-6 md:w-1/2"
             variants={leftVariants}
             initial="hidden"
             animate="visible"
@@ -75,15 +81,18 @@ const handleUpdate = async (event) => {
             <img
               src={user?.photoURL || user?.reloadUserInfo?.photoUrl || unknow}
               alt="User Avatar"
-              className="w-50 h-50 mx-auto rounded-full border-2 border-indigo-500 mb-3"
+              className="w-40 h-40 mx-auto rounded-full border-2 border-indigo-500 mb-3 object-cover"
             />
-            <h2 className="text-2xl font-bold">Name : {user?.displayName || "No Name"}</h2>
-            <p className="text-gray-400 text-sm">Email : {user?.email || "No Email"}</p>
+            <h2 className="text-2xl font-bold">
+              Name: {user?.displayName || "No Name"}
+            </h2>
+            <p className="text-gray-400 text-sm">
+              Email: {user?.email || "No Email"}
+            </p>
           </motion.div>
 
-        
-          <motion.form 
-            onSubmit={handleUpdate} 
+          <motion.form
+            onSubmit={handleUpdate}
             className="space-y-4 flex-1 md:w-1/2"
             variants={rightVariants}
             initial="hidden"
@@ -109,7 +118,9 @@ const handleUpdate = async (event) => {
               />
             </div>
 
-            {message && <p className="text-center text-sm text-green-400">{message}</p>}
+            {message && (
+              <p className="text-center text-sm text-red-400">{message}</p>
+            )}
 
             <button
               type="submit"
@@ -118,7 +129,6 @@ const handleUpdate = async (event) => {
               Update Information
             </button>
           </motion.form>
-
         </div>
       </motion.div>
     </motion.div>
