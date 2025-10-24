@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Register = () => {
-  const [error, setError] = useState("");
+  useEffect(() => {
+    document.title = "Register";
+  }, []);
+
+  const { createUser, setUser, updatePro, emailVerify } =
+    useContext(AuthContext);
+
+  const [error, setLocalError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-
 
   const handleRegister = (event) => {
     event.preventDefault();
@@ -14,11 +21,39 @@ const Register = () => {
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    const photoURL = form.photoURL.value;
+    const photo = form.photoURL.value;
 
-    console.log("Name:", name, "Email:", email, "Password:", password, "PhotoURL:", photoURL);
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
+    if (!passwordRegex.test(password)) {
+      setLocalError(
+        "Password must contain at least 1 uppercase letter, 1 lowercase letter, and be at least 6 characters long."
+      );
+      return;
+    }
 
+    createUser(email, password)
+      .then((res) => {
+        const user = res.user;
+        updatePro({ displayName: name, photoURL: photo })
+          .then(() => {
+            setUser({ ...user, displayName: name, photoURL: photo });
+            alert("Account Created Successfully.");
+            emailVerify(user)
+              .then(() => {
+                alert("Verification email sent! Please check your inbox.");
+                navigate("/");
+              })
+              .catch((error) => setLocalError(error.message));
+          })
+          .catch((error) => {
+            setLocalError(error.message);
+            setUser(user);
+          });
+      })
+      .catch((error) => {
+        setLocalError(error.message);
+      });
   };
 
   return (
@@ -27,7 +62,7 @@ const Register = () => {
         <h1 className="text-3xl font-bold text-center mb-6">Register for GameHub</h1>
 
         <form onSubmit={handleRegister} className="space-y-4">
-          
+        
           <div>
             <label className="block text-gray-300 mb-1">Full Name</label>
             <input
@@ -39,7 +74,7 @@ const Register = () => {
             />
           </div>
 
-             <div>
+          <div>
             <label className="block text-gray-300 mb-1">Photo URL</label>
             <input
               type="text"
@@ -49,7 +84,6 @@ const Register = () => {
             />
           </div>
 
-        
           <div>
             <label className="block text-gray-300 mb-1">Email</label>
             <input
@@ -61,6 +95,7 @@ const Register = () => {
             />
           </div>
 
+      
           <div className="relative">
             <label className="block text-gray-300 mb-1">Password</label>
             <input
@@ -83,10 +118,8 @@ const Register = () => {
             </button>
           </div>
 
-       
-
           {error && <p className="text-red-500 text-sm">{error}</p>}
-
+         
           <button
             type="submit"
             className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-md font-semibold transition"

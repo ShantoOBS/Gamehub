@@ -1,8 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline"; 
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Login = () => {
+  useEffect(() => {
+      document.title = "Login";
+    }, []);
+
+    const {name}=useContext(AuthContext);
+
+    console.log(name);
+
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();

@@ -12,7 +12,7 @@ export default function AllGame() {
   return (
     <div>
 
-        <PopularGames firstThree={firstThree} title={"All the Popular Games"}></PopularGames>
+        <PopularGames firstThree={firstThree} title={"All the Popular Games"} isShow={false}></PopularGames>
       
     </div>
   )

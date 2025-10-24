@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 
-export default function PopularGames({ firstThree, title }) {
+export default function PopularGames({ firstThree, title ,isShow}) {
   const sortedGames = firstThree;
 
   return (
@@ -42,12 +42,14 @@ export default function PopularGames({ firstThree, title }) {
       </div>
 
       <div className="flex justify-center items-center">
-        <Link
+      {
+         isShow &&   <Link
           to="/all-game"
           className="my-4 px-10 rounded-md bg-indigo-500 py-2.5 text-sm font-semibold text-white shadow hover:bg-indigo-400 transition"
         >
           See All
         </Link>
+      }
       </div>
     </div>
   );

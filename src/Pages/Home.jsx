@@ -18,7 +18,7 @@ export default function Home() {
     <div>
 
          <SlidingBanner></SlidingBanner>
-        <PopularGames firstThree={firstThree} title={"Popular Games"}></PopularGames>
+        <PopularGames firstThree={firstThree} title={"Popular Games"} isShow={true}></PopularGames>
          <Newsletter></Newsletter>
       
     </div>
