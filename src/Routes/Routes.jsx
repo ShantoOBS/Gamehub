@@ -5,6 +5,7 @@ import AllGame from "../Pages/AllGame";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import NotFound from "../Pages/NotFound";
+import Details from "../Pages/Details";
 
 
 export const router = createBrowserRouter([
@@ -30,6 +31,11 @@ export const router = createBrowserRouter([
            {
             path:'/register',
             element: <Register></Register>
+           },
+           {
+            path:'/details/:id',
+            element: <Details></Details>,
+            loader: ()=> fetch('/data.json')
            },
            {
             path:'/*',

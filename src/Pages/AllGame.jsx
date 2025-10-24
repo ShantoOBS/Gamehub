@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PopularGames from '../Components/PopularGames/PopularGames'
 import { useLoaderData } from 'react-router';
 
 export default function AllGame() {
+    useEffect(() => {
+      document.title = "All Game";
+    }, []);
+  
    const firstThree=useLoaderData();
 
   return (
