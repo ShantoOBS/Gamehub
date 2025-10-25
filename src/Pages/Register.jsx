@@ -10,7 +10,7 @@ const Register = () => {
     document.title = "Register | GameHub";
   }, []);
 
-  const { createUser, setUser, updatePro, emailVerify } = useContext(AuthContext);
+  const { createUser, setUser, updatePro, emailVerify,setLoading } = useContext(AuthContext);
   const [error, setLocalError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -38,9 +38,11 @@ const Register = () => {
         updatePro({ displayName: name, photoURL: photo })
           .then(() => {
             setUser({ ...user, displayName: name, photoURL: photo });
-            toast("Account Created Successfully.");
+            setLoading(false);
+            toast.success("Account Created Successfully.");
             emailVerify(user)
               .then(() => {
+                setLoading(false);
                 toast("Verification email sent! Please check your inbox.");
                 navigate("/");
               })
