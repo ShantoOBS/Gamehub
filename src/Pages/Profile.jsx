@@ -32,7 +32,7 @@ const Profile = () => {
            toast.success("Profile updated successfully!");
            form.reset();
            setLoading(false);
-           console.log(user);
+           
       })
      .catch (error => {
       setMessage(error.message);
@@ -70,7 +70,8 @@ const Profile = () => {
       >
         <h1 className="text-3xl font-bold text-center mb-6">Your Profile</h1>
 
-        <div className="flex flex-col md:flex-row justify-evenly gap-8">
+        <div className="flex flex-col md:flex-row justify-eve
+        nly gap-8">
      
           <motion.div
             className="text-center mb-6 md:w-1/2"
